@@ -1,5 +1,6 @@
 import azure.functions as func
 import logging
+import os
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ADMIN)
 
@@ -15,9 +16,12 @@ def http_trigger26(req: func.HttpRequest) -> func.HttpResponse:
             pass
         else:
             name = req_body.get('name')
+    extext = os.environ.get('EXTRATEXT')
+    inputcontainer = os.environ.get('INPUTCONTAINER')
+    outputcontainer = os.environ.get('OUTPUTCONTAINER')
 
     if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+        return func.HttpResponse(f"Hello, {name}. {inputcontainer};{outputcontainer} this here HTTP triggered function executed successfully.")
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
